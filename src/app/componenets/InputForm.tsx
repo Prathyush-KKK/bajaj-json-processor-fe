@@ -14,7 +14,8 @@ export default function InputForm({ setResponse }: InputFormProps) {
 
     try {
       const parsedInput = JSON.parse(input)
-      
+      console.log('Parsed input:', parsedInput) // Log parsed input
+
       const response = await fetch('/api/bfhl', {
         method: 'POST',
         headers: {
@@ -24,13 +25,15 @@ export default function InputForm({ setResponse }: InputFormProps) {
       })
 
       if (!response.ok) {
-        throw new Error('API request failed')
+        throw new Error(`API request failed with status ${response.status}`)
       }
 
       const data = await response.json()
+      console.log('API response:', data) // Log API response
       setResponse(data)
     } catch (err) {
-      setError('Invalid JSON input or API error')
+      console.error('Error:', err) // Log any errors
+      setError(`Error: ${err instanceof Error ? err.message : String(err)}`)
     }
   }
 
@@ -49,4 +52,4 @@ export default function InputForm({ setResponse }: InputFormProps) {
       {error && <p className="mt-2 text-red-500">{error}</p>}
     </form>
   )
-}   
+}
