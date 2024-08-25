@@ -15,7 +15,7 @@ export default function InputForm({ setResponse }: InputFormProps) {
     try {
       const parsedInput = JSON.parse(input)
       
-      const response = await fetch('YOUR_API_ENDPOINT', {
+      const response = await fetch('/api/bfhl', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function InputForm({ setResponse }: InputFormProps) {
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded font-light text-black"
+        className="w-full p-2 border border-gray-300 rounded"
         rows={5}
         placeholder='Enter JSON (e.g., { "data": ["A","C","z"] })'
       />
@@ -49,4 +49,4 @@ export default function InputForm({ setResponse }: InputFormProps) {
       {error && <p className="mt-2 text-red-500">{error}</p>}
     </form>
   )
-}
+}   
