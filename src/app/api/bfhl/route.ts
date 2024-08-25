@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const USER_ID = "your_name_ddmmyyyy";
-const EMAIL = "your.email@college.edu";
-const ROLL_NUMBER = "YOUR123456";
+const USER_ID = "prathyush_kodhanpur_19022003"; 
+const EMAIL = "prathyush.kodhanpur2021@vitstudent.ac.in";
+const ROLL_NUMBER = "21BCE0930";
+
+export async function GET() {
+  return NextResponse.json({ operation_code: 1 }, { status: 200 });
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    console.log('Received body:', body); // Log received body
-
     const { data } = body;
 
     if (!Array.isArray(data)) {
-      console.error('Invalid input: data is not an array');
-      return NextResponse.json({ error: "Invalid input: data must be an array" }, { status: 400 });
+      return NextResponse.json({ is_success: false, error: "Invalid input: data must be an array" }, { status: 400 });
     }
 
     const numbers = data.filter(item => !isNaN(Number(item)));
@@ -26,15 +27,13 @@ export async function POST(request: NextRequest) {
       user_id: USER_ID,
       email: EMAIL,
       roll_number: ROLL_NUMBER,
-      numbers: numbers,
-      alphabets: alphabets,
+      numbers,
+      alphabets,
       highest_lowercase_alphabet: highestLowercaseAlphabet,
     };
 
-    console.log('Sending response:', response); // Log response
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
-    console.error('Server error:', error); // Log server error
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ is_success: false, error: "Internal server error" }, { status: 500 });
   }
 }

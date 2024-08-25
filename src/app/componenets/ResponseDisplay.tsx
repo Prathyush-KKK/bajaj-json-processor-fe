@@ -60,7 +60,7 @@ export default function ResponseDisplay({ response }: ResponseDisplayProps) {
           </label>
         </div>
       </div>
-      <pre className="bg-gray-100 p-4 rounded">
+      <pre className="bg-gray-100 p-4 rounded bg-black">
         {JSON.stringify(filterResponse(), null, 2)}
       </pre>
     </div>
