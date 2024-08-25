@@ -16,7 +16,7 @@ export default function InputForm({ setResponse }: InputFormProps) {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
   const [selectedOption, setSelectedOption] = useState<{ value: string, label: string }[]>([]);
-  const [response, setResponseState] = useState<any>(null);
+  const [response, setResponseState] = useState<{ [key: string]: string[] } | null>(null);
 
   useEffect(() => {
     // Set the website title to the roll number
@@ -63,13 +63,13 @@ export default function InputForm({ setResponse }: InputFormProps) {
     const filteredResponse = selectedOption.reduce((acc: any, option) => {
       acc[option.value] = response[option.value];
       return acc;
-    }, {});
+    }, {} as { [key: string]: string[] });
 
     return Object.keys(filteredResponse).length > 0 ? (
       <div className="mt-2">
         {Object.entries(filteredResponse).map(([key, value]) => (
           <div key={key} className="mt-2">
-            <strong>{options.find(opt => opt.value === key)?.label}:</strong> {value?.join(', ') || 'N/A'}
+            <strong>{options.find(opt => opt.value === key)?.label}:</strong> {Array.isArray(value) ? value.join(', ') : 'N/A'}
           </div>
         ))}
       </div>
